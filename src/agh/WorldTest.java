@@ -56,9 +56,4 @@ class WorldTest extends OptionParser{
 	Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
 	IEngine enegine = new SimulationEngine(directions, map1, positions);
 			
-	@Test
-	void testAnimalsOrientations()
-	{
-		
-	}
 }

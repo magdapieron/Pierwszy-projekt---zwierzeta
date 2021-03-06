@@ -20,23 +20,22 @@ public class RectangularMap implements IWorldMap{
 		this.animals = new ArrayList<>();
 	}
 	
-		@Override
+		
 	public boolean canMoveTo(Vector2d position) {
 		if(lowLeft.precedes(position) && uppRight.follows(position) && !isOccupied(position) )
 			return true;
 		return false;
 	}
 		
-	
 	@Override
-	public boolean place(Animal animal) {
+	public boolean placeAnimal(Animal animal) {
 		if(isOccupied(animal.getPosition()))
 			return false;
 		animals.add(animal);
 		return true;
 	}
-
-	@Override
+	
+	
 	public boolean isOccupied(Vector2d position) {
 		for(Animal a : animals)
 		{
@@ -46,7 +45,7 @@ public class RectangularMap implements IWorldMap{
 		return false;
 	}
 
-	@Override
+	
 	public Object objectAt(Vector2d position) {
 		if(isOccupied(position))
 			for(Animal a : animals)
@@ -59,11 +58,19 @@ public class RectangularMap implements IWorldMap{
 			}
 		return null;
 	}
+
 	
 	public String toString()
 	{
 		MapVisualizer visulation = new MapVisualizer(this);
 		return visulation.draw(this.lowLeft, this.uppRight);	
+	}
+
+
+	@Override
+	public boolean placeGrass(Grass grass) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

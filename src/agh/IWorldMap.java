@@ -13,7 +13,9 @@ public interface IWorldMap {
      * @return True if the object can move to that position.
      */
 
-	 boolean place(Animal animal);
+	 boolean placeAnimal(Animal animal);
+	 
+	 boolean placeGrass(Grass grass);
     
      /**
      * Place a animal on the map.
