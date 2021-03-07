@@ -32,12 +32,20 @@ public class SimulationEngine implements IEngine {
 	@Override
 	public void run() {
 		System.out.println(map);
-		for(int i=0; i<directions.length; i++)
+		if( animals.size() != 0)
 		{
-			Animal actualAnimal = (Animal)(map.objectAt(animals.get(i % animals.size()).getPosition()));
-			actualAnimal.move(directions[i]);
+			for(int i=0; i<directions.length; i++)
+			{	
+				Animal actualAnimal = (Animal)(map.objectAt(animals.get(i % animals.size()).getPosition()));
+			
+				actualAnimal.move(directions[i]);
+				if(i == 14)System.out.println(actualAnimal.getPosition());
+				if(i == 15)System.out.println(actualAnimal.getPosition());
+			}
+			System.out.println(map);
 		}
-		System.out.println(map);
+
+
 	}
 
 }

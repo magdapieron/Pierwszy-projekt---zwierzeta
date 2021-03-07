@@ -14,8 +14,6 @@ public interface IWorldMap {
      */
 
 	 boolean placeAnimal(Animal animal);
-	 
-	 boolean placeGrass(Grass grass);
     
      /**
      * Place a animal on the map.
