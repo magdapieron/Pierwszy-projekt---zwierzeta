@@ -15,6 +15,13 @@ public abstract class AbstractWorldMap implements IWorldMap {
 			return true;
 		return false;
 	}
+	
+	public boolean placeAnimal(Animal animal) {
+		if(isOccupied(animal.getPosition()))
+			return false;
+		animals.add(animal);
+		return true;
+	}
 
 	public boolean isOccupied(Vector2d position) {
 		for(Animal a : animals)
@@ -25,7 +32,6 @@ public abstract class AbstractWorldMap implements IWorldMap {
 		return false;
 	}
 
-	
 	public Object objectAt(Vector2d position) {
 		if(isOccupied(position))
 			for(Animal a : animals)

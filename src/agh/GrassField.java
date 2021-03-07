@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GrassField implements IWorldMap {
+public class GrassField extends AbstractWorldMap {
 
 	private List<Animal> animals;
 	private int numberOfGrassField;
 	private int max;
 	private List<Grass> grassFields;
 	private Vector2d grassPosition;
-
+	private List<Vector2d> corner = new ArrayList<>();
 
 	GrassField(int numberOfGrassField)
 	{
@@ -19,8 +19,7 @@ public class GrassField implements IWorldMap {
 		this.grassFields = new ArrayList<>();
 		this.animals = new ArrayList<>();
 		
-		placeGrass();
-			
+		placeGrass();		
 	}
 	
 	public Vector2d randomizePosition()
@@ -46,21 +45,13 @@ public class GrassField implements IWorldMap {
 		}
 	}
 	
+	@Override
 	public boolean canMoveTo(Vector2d position) {	
 		if( !isOccupied(position) )
 			return true;
 		return false;
 	}
 
-	@Override
-	public boolean placeAnimal(Animal animal) {
-		if(isOccupied(animal.getPosition()))
-			return false;
-		animals.add(animal);
-		return true;
-	}
-
-	@Override
 	public boolean placeGrass(Grass grass) {
 		if(isOccupied(grass.getPosition()))
 			return false;
@@ -68,12 +59,11 @@ public class GrassField implements IWorldMap {
 		return true;
 	}
 	
+	@Override
 	public boolean isOccupied(Vector2d position) {
-		for(Animal a : animals)
-		{
-			if(a.getPosition().equals(position))
-				return true;
-		}
+		
+		if(super.isOccupied(position))
+			return true;
 
 		for(Grass g : grassFields)
 		{
@@ -85,15 +75,12 @@ public class GrassField implements IWorldMap {
 	
 
 	public Object objectAt(Vector2d position) {
-		if(isOccupied(position))
-			for(Animal a : animals)
-			{
-				if(a.getPosition().equals(position))
-				{
-					Object obj = a;
-					return a;
-				}
-			}
+		
+		Object object = super.objectAt(position);
+		
+		if(object != null)
+			return object;
+
 		for(Grass g : grassFields)
 		{
 			if(g.getPosition().equals(position))
@@ -105,10 +92,48 @@ public class GrassField implements IWorldMap {
 		return null;
 	}
 	
+	private void corners()		
+	{
+		Vector2d left = null, right = null;
+	
+		for(int i=0; i<animals.size(); i++)
+		System.out.println(animals.get(i).getPosition());
+		
+		System.out.println(animals);
+		
+		if(animals != null && animals.size() != 0)
+		{
+			left = animals.get(0).getPosition();
+			right = animals.get(0).getPosition();
+	
+			for(Animal a : animals)
+			{
+				left = a.getPosition().lowerLeft(left);
+				right = a.getPosition().upperRight(right);
+			}
+
+		}
+		if(grassFields != null && grassFields.size() != 0)
+		{
+			left = grassFields.get(0).getPosition();
+			right = grassFields.get(0).getPosition();
+
+			for(Grass g : grassFields)
+			{
+				left = g.getPosition().lowerLeft(left);
+				right = g.getPosition().upperRight(right);
+			}
+
+		}			
+		corner.add(0, left);
+		corner.add(1, right);
+	}
+	
 	public String toString()
 	{	
+		corners();
 		MapVisualizer visulation = new MapVisualizer(this);
-		return visulation.draw(new Vector2d(-2,-2), new Vector2d(10,10));	
+		return visulation.draw(corner.get(0), corner.get(1));	
 	}
 	
 }
