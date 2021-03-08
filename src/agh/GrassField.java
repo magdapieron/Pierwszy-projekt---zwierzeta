@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
 
-	private List<Animal> animals;
 	private int numberOfGrassField;
 	private int max;
 	private List<Grass> grassFields;
@@ -17,7 +16,6 @@ public class GrassField extends AbstractWorldMap {
 	{
 		this.numberOfGrassField = numberOfGrassField;
 		this.grassFields = new ArrayList<>();
-		this.animals = new ArrayList<>();
 		
 		placeGrass();		
 	}
@@ -92,46 +90,38 @@ public class GrassField extends AbstractWorldMap {
 		return null;
 	}
 	
-	private void corners()		
+	private void getCorners()		
 	{
 		Vector2d left = null, right = null;
 	
-		for(int i=0; i<animals.size(); i++)
-		System.out.println(animals.get(i).getPosition());
-		
-		System.out.println(animals);
-		
 		if(animals != null && animals.size() != 0)
-		{
+		{			
 			left = animals.get(0).getPosition();
 			right = animals.get(0).getPosition();
-	
+			
 			for(Animal a : animals)
 			{
 				left = a.getPosition().lowerLeft(left);
 				right = a.getPosition().upperRight(right);
 			}
-
 		}
+		
 		if(grassFields != null && grassFields.size() != 0)
 		{
-			left = grassFields.get(0).getPosition();
-			right = grassFields.get(0).getPosition();
-
 			for(Grass g : grassFields)
 			{
 				left = g.getPosition().lowerLeft(left);
 				right = g.getPosition().upperRight(right);
 			}
-
-		}			
+		}		
+		
 		corner.add(0, left);
 		corner.add(1, right);
 	}
 	
 	public String toString()
 	{	
-		corners();
+		getCorners();
 		MapVisualizer visulation = new MapVisualizer(this);
 		return visulation.draw(corner.get(0), corner.get(1));	
 	}

@@ -23,28 +23,12 @@ public class Animal{
 		this.position = initialPosition;
 	}
 	
-	public IWorldMap getMap() {
-		return map;
-	}
-
-	public void setMap(IWorldMap map) {
-		this.map = map;
-	}
-	
 	public MapDirection getOrientation() {
 		return orientation;
 	}
 
-	public void setOrientation(MapDirection orientation) {
-		this.orientation = orientation;
-	}
-
 	public Vector2d getPosition() {
 		return position;
-	}
-
-	public void setPosition(Vector2d position) {
-		this.position = position; 
 	}
 
 	@Override
@@ -78,7 +62,5 @@ public class Animal{
 			default:
 			break;
 			}
-	}
-	 
-	
+	}	
 }

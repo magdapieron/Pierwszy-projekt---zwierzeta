@@ -6,7 +6,6 @@ import java.util.List;
 public abstract class AbstractWorldMap implements IWorldMap {
 
 	protected List<Animal> animals = new ArrayList<>();
-	protected List<Grass> grassFields = new ArrayList<>();
 	protected Vector2d uppRight;
 	protected Vector2d lowLeft;
 	
