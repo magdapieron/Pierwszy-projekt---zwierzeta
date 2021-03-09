@@ -132,6 +132,7 @@ public class GrassField extends AbstractWorldMap {
 	
 	public String toString()
 	{	
+		System.out.println("test");
 		corners();
 		MapVisualizer visulation = new MapVisualizer(this);
 		return visulation.draw(corner.get(0), corner.get(1));	
