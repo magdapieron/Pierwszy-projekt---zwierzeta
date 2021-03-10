@@ -1,17 +1,20 @@
 package agh;
 
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public abstract class AbstractWorldMap implements IWorldMap {
 
-	protected List<Animal> animals = new ArrayList<>();
-	protected List<Grass> grassFields = new ArrayList<>();
-	protected Vector2d uppRight;
-	protected Vector2d lowLeft;
+	protected Map<Vector2d, Animal> animals = new LinkedHashMap<>();
+	protected MapVisualizer visulation = new MapVisualizer(this);
+	protected List<Vector2d> corner = new ArrayList<>();
 	
 	public boolean canMoveTo(Vector2d position) {
-		if(lowLeft.precedes(position) && uppRight.follows(position) && !isOccupied(position) )
+		if(getLeftCorner().precedes(position) && getRightCorner().follows(position) && !isOccupied(position) )
 			return true;
 		return false;
 	}
@@ -19,29 +22,22 @@ public abstract class AbstractWorldMap implements IWorldMap {
 	public boolean placeAnimal(Animal animal) {
 		if(isOccupied(animal.getPosition()))
 			return false;
-		animals.add(animal);
+		animals.put(animal.getPosition(), animal);
 		return true;
 	}
 
 	public boolean isOccupied(Vector2d position) {
-		for(Animal a : animals)
-		{
-			if(a.getPosition().equals(position))
-				return true;
-		}
+		if(animals.containsKey(position))
+			return true;
 		return false;
 	}
-
-	public Object objectAt(Vector2d position) {
-		if(isOccupied(position))
-			for(Animal a : animals)
-			{
-				if(a.getPosition().equals(position))
-				{
-					Object obj = a;
-					return a;
-				}
-			}
-		return null;
+	
+//	public abstract void corners();
+	public abstract Vector2d getRightCorner();
+	public abstract Vector2d getLeftCorner();
+	
+	public String toString()		
+	{
+		return visulation.draw(getLeftCorner(), getRightCorner());	
 	}
 }

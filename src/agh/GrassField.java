@@ -1,25 +1,18 @@
 package agh;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
 
-	
-	private List<Animal> animals;
 	private int numberOfGrassField;
-	private int max;
-	private List<Grass> grassFields;
-	private Vector2d grassPosition;
-	private List<Vector2d> corner = new ArrayList<>();
-
+	private Map<Vector2d, Grass> grassFields;
+	
 	GrassField(int numberOfGrassField)
 	{
 		this.numberOfGrassField = numberOfGrassField;
-		this.grassFields = new ArrayList<>();
-		this.animals = new ArrayList<>();
-		
+		this.grassFields = new LinkedHashMap<>();
 		placeGrass();		
 	}
 	
@@ -42,21 +35,14 @@ public class GrassField extends AbstractWorldMap {
 			{
 				position = randomizePosition();
 			}
-			grassFields.add(new Grass(position));
+			grassFields.put(position, new Grass(position));
 		}
 	}
 	
-	@Override
-	public boolean canMoveTo(Vector2d position) {	
-		if( !isOccupied(position) )
-			return true;
-		return false;
-	}
-
 	public boolean placeGrass(Grass grass) {
 		if(isOccupied(grass.getPosition()))
 			return false;
-		grassFields.add(grass);
+		grassFields.put(grass.getPosition(), grass);
 		return true;
 	}
 	
@@ -66,76 +52,88 @@ public class GrassField extends AbstractWorldMap {
 		if(super.isOccupied(position))
 			return true;
 
-		for(Grass g : grassFields)
-		{
-			if(g.getPosition().equals(position))
-				return true;
-		}
+		if(grassFields.containsKey(position))
+			return true;
+
 		return false;
 	}
 	
 
 	public Object objectAt(Vector2d position) {
 		
-		Object object = super.objectAt(position);
-		
-		if(object != null)
-			return object;
-
-		for(Grass g : grassFields)
+		if(isOccupied(position))  
 		{
-			if(g.getPosition().equals(position))
-			{
-				Object obj = g;
-				return g;
-			}
-		}
+				if(grassFields.get(position) != null)
+				{
+					Object obj = grassFields.get(position);
+					return obj;
+				}
+				
+				if(animals.get(position) != null)
+				{
+					Object obj = animals.get(position);
+					return obj;
+				}
+		}	
+		
 		return null;
 	}
 	
-	private void corners()		
+	public Vector2d getRightCorner()
 	{
-		Vector2d left = null, right = null;
-	
-		for(int i=0; i<animals.size(); i++)
-		System.out.println(animals.get(i).getPosition());
-		
-		System.out.println(animals);
-		
-		if(animals != null && animals.size() != 0)
-		{
-			left = animals.get(0).getPosition();
-			right = animals.get(0).getPosition();
-	
-			for(Animal a : animals)
+		Vector2d right = null;
+
+		System.out.println(right);
+		for(Vector2d keyA : animals.keySet())
+		{			
+			for(Vector2d keyG : grassFields.keySet())
 			{
-				left = a.getPosition().lowerLeft(left);
-				right = a.getPosition().upperRight(right);
+				right = keyA.upperRight(keyG);
 			}
-
-		}
-		if(grassFields != null && grassFields.size() != 0)
-		{
-			left = grassFields.get(0).getPosition();
-			right = grassFields.get(0).getPosition();
-
-			for(Grass g : grassFields)
-			{
-				left = g.getPosition().lowerLeft(left);
-				right = g.getPosition().upperRight(right);
-			}
-
-		}			
-		corner.add(0, left);
-		corner.add(1, right);
+		}		
+		return right;
 	}
 	
-	public String toString()
-	{	
-		System.out.println("test");
-		corners();
-		MapVisualizer visulation = new MapVisualizer(this);
-		return visulation.draw(corner.get(0), corner.get(1));	
+	public Vector2d getLeftCorner()
+	{
+		Vector2d left = null;
+
+		for(Vector2d keyA : animals.keySet())
+		{
+			for(Vector2d keyG : grassFields.keySet())
+			{
+				left = keyA.upperRight(keyG);
+			}
+		}		
+		return left;
 	}
+	
+//	public void corners()		
+//	{
+//		Vector2d left = null, right = null;
+//		
+//		if(animals != null && animals.size() != 0)
+//		{
+//			left = animals.g
+//			right = animals.get(0).getPosition();
+//	
+//			for(Animal a : animals)
+//			{
+//				left = a.getPosition().lowerLeft(left);
+//				right = a.getPosition().upperRight(right);
+//			}
+//		}
+//		if(grassFields != null && grassFields.size() != 0)
+//		{
+//			for(Grass g : grassFields)
+//			{
+//				left = g.getPosition().lowerLeft(left);
+//				right = g.getPosition().upperRight(right);
+//			}
+//
+//		}			
+//		corner.add(0, left);
+//		corner.add(1, right);
+//	}
 	
 }
