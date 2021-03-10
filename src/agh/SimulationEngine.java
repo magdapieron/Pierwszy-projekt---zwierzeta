@@ -1,21 +1,21 @@
 package agh;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SimulationEngine implements IEngine {
 
 	private MoveDirection[] directions;
-	private Vector2d[] positions;
 	private IWorldMap map;
-	private List<Animal> animals;
+	protected Map<Vector2d, Animal> animals; 
 
 
 	public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions) {
 		super();
-		this.animals = new ArrayList<>();
+		this.animals = new LinkedHashMap<>();
 		this.directions = directions;
-		this.positions = positions;
 		this.map = map;
 		
 		for(Vector2d pos : positions)
@@ -23,10 +23,9 @@ public class SimulationEngine implements IEngine {
 			Animal animal = new Animal(map, pos);
 			if(map.placeAnimal(animal))
 			{
-				animals.add(animal);
+				animals.put(pos, animal);
 			}
 		}
-
 	}
 
 	@Override
@@ -36,16 +35,15 @@ public class SimulationEngine implements IEngine {
 		{
 			for(int i=0; i<directions.length; i++)
 			{	
-				Animal actualAnimal = (Animal)(map.objectAt(animals.get(i % animals.size()).getPosition()));
-			
-				actualAnimal.move(directions[i]);
-				if(i == 14)System.out.println(actualAnimal.getPosition());
-				if(i == 15)System.out.println(actualAnimal.getPosition());
+				List<Vector2d> list = new ArrayList<>(animals.keySet());
+				
+				Animal actualAnimal = (Animal)(map.objectAt(list.get(i % list.size())));
+				System.out.println(actualAnimal);
+				System.out.println(actualAnimal.getPosition());
+				
+				actualAnimal.move(directions[i]); // need to change the keys, but how? 
 			}
-			System.out.println(map);
 		}
-
-
+		System.out.println(map);
 	}
-
 }

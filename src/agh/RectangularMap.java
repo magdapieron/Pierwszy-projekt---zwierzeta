@@ -1,29 +1,44 @@
 package agh;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RectangularMap extends AbstractWorldMap{
 	
-	private List<Animal> animals;
-	private int width;
-	private int height;
 	private Vector2d uppRight;
-	private Vector2d lowLeft; 
+	private Vector2d lowLeft;
 
 	
 	public RectangularMap(int width, int height) {
-		this.width = width;
-		this.height = height;
 		this.uppRight = new Vector2d(width-1, height-1);
 		this.lowLeft = new Vector2d(0,0);
-		this.animals = new ArrayList<>();
+	}
+		
+	public Object objectAt(Vector2d position) {
+		if(isOccupied(position))
+		{
+			if(animals.get(position) != null)
+			{
+				Object obj = animals.get(position);
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Vector2d getRightCorner() {
+		return uppRight;
+	}
+
+	@Override
+	public Vector2d getLeftCorner() {
+		return lowLeft;
 	}
 	
-	public String toString()
-	{
-		MapVisualizer visulation = new MapVisualizer(this);
-		return visulation.draw(this.lowLeft, this.uppRight);	
-	}
+	
+//	public void corners()	
+//	{
+//		corner.add(0, this.lowLeft);
+//		corner.add(1, this.uppRight);
+//	}
 	
 }
