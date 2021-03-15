@@ -1,9 +1,6 @@
 package agh;
 
-
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -11,7 +8,7 @@ public abstract class AbstractWorldMap implements IWorldMap {
 
 	protected Map<Vector2d, Animal> animals = new LinkedHashMap<>();
 	protected MapVisualizer visulation = new MapVisualizer(this);
-	protected List<Vector2d> corner = new ArrayList<>();
+//	protected List<Vector2d> corner = new ArrayList<>();
 	
 	public boolean canMoveTo(Vector2d position) {
 		if(getLeftCorner().precedes(position) && getRightCorner().follows(position) && !isOccupied(position) )
@@ -39,5 +36,12 @@ public abstract class AbstractWorldMap implements IWorldMap {
 	public String toString()		
 	{
 		return visulation.draw(getLeftCorner(), getRightCorner());	
+	}
+	
+	
+	void positionChanged(Vector2d oldPosition, Vector2d newPosition, IWorldMap map)
+	{
+		animals.remove(oldPosition, animals.get(oldPosition));
+		animals.put(newPosition, new Animal(map, newPosition));
 	}
 }

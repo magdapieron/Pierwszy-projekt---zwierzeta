@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GrassField extends AbstractWorldMap {
+public class GrassField extends AbstractWorldMap{
 
 	private int numberOfGrassField;
 	private Map<Vector2d, Grass> grassFields;

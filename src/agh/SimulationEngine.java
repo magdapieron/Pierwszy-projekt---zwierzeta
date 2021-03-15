@@ -11,13 +11,16 @@ public class SimulationEngine implements IEngine {
 	private IWorldMap map;
 	protected Map<Vector2d, Animal> animals; 
 
-
 	public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions) {
 		super();
 		this.animals = new LinkedHashMap<>();
 		this.directions = directions;
 		this.map = map;
-		
+		putAnimalsOnMap(positions);
+	}
+	
+	private void putAnimalsOnMap(Vector2d[] positions)
+	{
 		for(Vector2d pos : positions)
 		{
 			Animal animal = new Animal(map, pos);
@@ -37,11 +40,13 @@ public class SimulationEngine implements IEngine {
 			{	
 				List<Vector2d> list = new ArrayList<>(animals.keySet());
 				
-				Animal actualAnimal = (Animal)(map.objectAt(list.get(i % list.size())));
+				Vector2d index = list.get(i % list.size());
+				
+				Animal actualAnimal = (Animal)(map.objectAt(index));
 				System.out.println(actualAnimal);
 				System.out.println(actualAnimal.getPosition());
 				
-				actualAnimal.move(directions[i]); // need to change the keys, but how? 
+				actualAnimal.move(directions[i]); 
 			}
 		}
 		System.out.println(map);
