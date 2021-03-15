@@ -46,7 +46,7 @@ public class SimulationEngine implements IEngine {
 				System.out.println(actualAnimal);
 				System.out.println(actualAnimal.getPosition());
 				
-				actualAnimal.move(directions[i]); 
+				actualAnimal.move(directions[i]);  // for later, requires the use of the Observer (design pattern) - in progress 
 			}
 		}
 		System.out.println(map);
