@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class GrassField extends AbstractWorldMap{
+public class GrassField extends AbstractWorldMap {
 
 	private int numberOfGrassField;
 	private Map<Vector2d, Grass> grassFields;
@@ -13,7 +13,7 @@ public class GrassField extends AbstractWorldMap{
 	{
 		this.numberOfGrassField = numberOfGrassField;
 		this.grassFields = new LinkedHashMap<>();
-		placeGrass();		
+		addGrass();		
 	}
 	
 	public Vector2d randomizePosition()
@@ -26,12 +26,12 @@ public class GrassField extends AbstractWorldMap{
 		return new Vector2d(x,y);
 	}
 	
-	public void placeGrass()
+	public void addGrass()
 	{
 		for(int i=0; i<numberOfGrassField; i++)
 		{		
 			Vector2d position = randomizePosition();
-			while(isOccupied(position))				// animal is ok, grass is not  
+			while(isOccupied(position))
 			{
 				position = randomizePosition();
 			}
@@ -39,11 +39,17 @@ public class GrassField extends AbstractWorldMap{
 		}
 	}
 	
-	public boolean placeGrass(Grass grass) {
-		if(isOccupied(grass.getPosition()))
-			return false;
-		grassFields.put(grass.getPosition(), grass);
-		return true;
+//	public boolean placeGrass(Grass grass) {
+//		if(isOccupied(grass.getPosition()))
+//			return false;
+//		grassFields.put(grass.getPosition(), grass);
+//		return true;
+//	}
+	
+	public boolean canMoveTo(Vector2d position) {
+		if(!isOccupied(position))
+			return true;
+		return false;
 	}
 	
 	@Override
@@ -67,15 +73,13 @@ public class GrassField extends AbstractWorldMap{
 				{
 					Object obj = grassFields.get(position);
 					return obj;
-				}
-				
+				}				
 				if(animals.get(position) != null)
 				{
 					Object obj = animals.get(position);
 					return obj;
 				}
-		}	
-		
+		}			
 		return null;
 	}
 	

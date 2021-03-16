@@ -1,10 +1,14 @@
 package agh;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Animal{
 
 	private MapDirection orientation;
 	private Vector2d position;
 	private IWorldMap map;
+	private List<IPositionChangeObserver> observers = new LinkedList<>();
 	
 	public Animal()
 	{
@@ -36,9 +40,9 @@ public class Animal{
 		return orientation.toString();
 	}
 	
-	 void move(MoveDirection direction)
+	public void move(MoveDirection direction)
 	{	
-		 Vector2d position1 = null;
+		 Vector2d nextPosition = null;
 
 			switch(direction)
 			{
@@ -48,19 +52,44 @@ public class Animal{
 			case LEFT: orientation = orientation.previous();
 			break;
 			
-			case FORWARD: position1 = position.add(orientation.toUnitVector());
-						if(map.canMoveTo(position1)) 
-							position = position1;
+			case FORWARD: nextPosition = position.add(orientation.toUnitVector());
+							tryMove(nextPosition);
 								
 			break;
 			
-			case BACKWARD: position1 = position.add(orientation.toUnitVector().opposite());
-						if(map.canMoveTo(position1))
-							position = position1;
+			case BACKWARD: nextPosition = position.add(orientation.toUnitVector().opposite());
+							tryMove(nextPosition);
 			break;
 			
 			default:
 			break;
 			}
 	}	
+	
+	private void tryMove(Vector2d nextPosition)
+	{
+		if(map.canMoveTo(nextPosition))
+		{
+			positionChanged(position, nextPosition);
+			this.position = nextPosition;
+		}
+	}
+	 
+	public void addObserver(IPositionChangeObserver observer)
+	 {
+		 observers.add(observer);
+	 }
+	 
+	public void removeObserver(IPositionChangeObserver observer)
+	 {
+		 observers.remove(observer);
+	 }
+	 
+	public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
+	 {
+		 for(IPositionChangeObserver obs : observers)
+		 {
+			 obs.positionChanged(oldPosition, newPosition);
+		 }
+	 }
 }

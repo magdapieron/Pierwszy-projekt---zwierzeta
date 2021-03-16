@@ -4,22 +4,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-public abstract class AbstractWorldMap implements IWorldMap {
+public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver {
 
 	protected Map<Vector2d, Animal> animals = new LinkedHashMap<>();
 	protected MapVisualizer visulation = new MapVisualizer(this);
-//	protected List<Vector2d> corner = new ArrayList<>();
 	
-	public boolean canMoveTo(Vector2d position) {
-		if(getLeftCorner().precedes(position) && getRightCorner().follows(position) && !isOccupied(position) )
-			return true;
-		return false;
-	}
+	public abstract boolean canMoveTo(Vector2d position);
 	
 	public boolean placeAnimal(Animal animal) {
 		if(isOccupied(animal.getPosition()))
 			return false;
 		animals.put(animal.getPosition(), animal);
+		animal.addObserver(this);
 		return true;
 	}
 
@@ -29,7 +25,6 @@ public abstract class AbstractWorldMap implements IWorldMap {
 		return false;
 	}
 	
-//	public abstract void corners();
 	public abstract Vector2d getRightCorner();
 	public abstract Vector2d getLeftCorner();
 	
@@ -38,10 +33,10 @@ public abstract class AbstractWorldMap implements IWorldMap {
 		return visulation.draw(getLeftCorner(), getRightCorner());	
 	}
 	
-	
-	void positionChanged(Vector2d oldPosition, Vector2d newPosition, IWorldMap map)
+	public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
 	{
-		animals.remove(oldPosition, animals.get(oldPosition));
-		animals.put(newPosition, new Animal(map, newPosition));
+		Animal animal = animals.get(oldPosition);
+		animals.remove(oldPosition, animal);
+		animals.put(newPosition, animal);
 	}
 }
