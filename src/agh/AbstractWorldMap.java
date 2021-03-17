@@ -25,8 +25,8 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 		return false;
 	}
 	
-	public abstract Vector2d getRightCorner();
-	public abstract Vector2d getLeftCorner();
+	abstract Vector2d getRightCorner();
+	abstract Vector2d getLeftCorner();
 	
 	public String toString()		
 	{

@@ -1,5 +1,6 @@
 package agh;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -39,13 +40,7 @@ public class GrassField extends AbstractWorldMap {
 		}
 	}
 	
-//	public boolean placeGrass(Grass grass) {
-//		if(isOccupied(grass.getPosition()))
-//			return false;
-//		grassFields.put(grass.getPosition(), grass);
-//		return true;
-//	}
-	
+	@Override
 	public boolean canMoveTo(Vector2d position) {
 		if(!isOccupied(position))
 			return true;
@@ -64,7 +59,7 @@ public class GrassField extends AbstractWorldMap {
 		return false;
 	}
 	
-
+	@Override
 	public Object objectAt(Vector2d position) {
 		
 		if(isOccupied(position))  
@@ -83,61 +78,47 @@ public class GrassField extends AbstractWorldMap {
 		return null;
 	}
 	
+	@Override
 	public Vector2d getRightCorner()
-	{
-		Vector2d right = null;
-
-		System.out.println(right);
-		for(Vector2d keyA : animals.keySet())
-		{			
-			for(Vector2d keyG : grassFields.keySet())
-			{
-				right = keyA.upperRight(keyG);
-			}
-		}		
-		return right;
-	}
-	
-	public Vector2d getLeftCorner()
-	{
-		Vector2d left = null;
-
-		for(Vector2d keyA : animals.keySet())
+	{	
+		Iterator<Vector2d> keyA = animals.keySet().iterator();
+		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
+		
+		Vector2d rightA = keyA.next();						
+		Vector2d rightG = keyG.next();
+		
+		Vector2d upperRight = rightA.upperRight(rightG);
+		
+		while (keyA.hasNext())
 		{
-			for(Vector2d keyG : grassFields.keySet())
-			{
-				left = keyA.upperRight(keyG);
-			}
-		}		
-		return left;
+			upperRight = upperRight.upperRight(keyA.next());
+		}
+		while (keyG.hasNext())
+		{
+			upperRight = upperRight.upperRight(keyG.next());
+		}
+		return upperRight;
 	}
 	
-//	public void corners()		
-//	{
-//		Vector2d left = null, right = null;
-//		
-//		if(animals != null && animals.size() != 0)
-//		{
-//			left = animals.g
-//			right = animals.get(0).getPosition();
-//	
-//			for(Animal a : animals)
-//			{
-//				left = a.getPosition().lowerLeft(left);
-//				right = a.getPosition().upperRight(right);
-//			}
-//		}
-//		if(grassFields != null && grassFields.size() != 0)
-//		{
-//			for(Grass g : grassFields)
-//			{
-//				left = g.getPosition().lowerLeft(left);
-//				right = g.getPosition().upperRight(right);
-//			}
-//
-//		}			
-//		corner.add(0, left);
-//		corner.add(1, right);
-//	}
-	
+	@Override
+	public Vector2d getLeftCorner()
+	{		
+		Iterator<Vector2d> keyA = animals.keySet().iterator();
+		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
+		
+		Vector2d leftA = keyA.next();						
+		Vector2d leftG = keyG.next();
+		
+		Vector2d lowerLeft = leftA.lowerLeft(leftG);
+		
+		while (keyA.hasNext())
+		{
+			lowerLeft = lowerLeft.lowerLeft(keyA.next());
+		}
+		while (keyG.hasNext())
+		{
+			lowerLeft = lowerLeft.lowerLeft(keyG.next());
+		}
+		return lowerLeft;
+	}	
 }

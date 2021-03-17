@@ -40,10 +40,7 @@ public class SimulationEngine implements IEngine {
 				if(i == animals.size())
 					i = 0;
 				Animal actualAnimal = animals.get(i);
-				System.out.println("przed move: ");
-				System.out.println(actualAnimal.getPosition());
 				actualAnimal.move(direction);
-				System.out.println(actualAnimal.getPosition());
 				i++;
 			}
 			
