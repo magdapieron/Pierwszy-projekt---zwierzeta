@@ -10,7 +10,7 @@ class WorldTest extends OptionParser{
 
 	RectangularMap map = new RectangularMap(4,5);
 	Animal animal = new Animal(map);
-	String[] movements = new String[] {"f", "r", "right", "b", "s", "k"};
+	String[] movements = new String[] {"f", "r", "right", "b"};
 	MoveDirection[] correctMovements = new MoveDirection[] {MoveDirection.FORWARD, MoveDirection.RIGHT, MoveDirection.RIGHT, MoveDirection.BACKWARD};
 	
 	@Test

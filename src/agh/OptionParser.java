@@ -2,7 +2,7 @@ package agh;
 
 public class OptionParser {
 	
-	public static MoveDirection[] parse(String[] args)
+	public MoveDirection[] parse(String[] args)
 	{
 		
 		int ctr = 0;
@@ -57,8 +57,8 @@ public class OptionParser {
 				i++;
 				break;
 			default: 
-				break;
-			}
+				throw new IllegalArgumentException(arg + " is not legal move specification");
+			}		
 		}
 			return movements;	
 	}

@@ -84,11 +84,8 @@ public class GrassField extends AbstractWorldMap {
 		Iterator<Vector2d> keyA = animals.keySet().iterator();
 		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
 		
-		Vector2d rightA = keyA.next();						
-		Vector2d rightG = keyG.next();
-		
-		Vector2d upperRight = rightA.upperRight(rightG);
-		
+		Vector2d upperRight = keyA.next();	
+				
 		while (keyA.hasNext())
 		{
 			upperRight = upperRight.upperRight(keyA.next());
@@ -106,10 +103,7 @@ public class GrassField extends AbstractWorldMap {
 		Iterator<Vector2d> keyA = animals.keySet().iterator();
 		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
 		
-		Vector2d leftA = keyA.next();						
-		Vector2d leftG = keyG.next();
-		
-		Vector2d lowerLeft = leftA.lowerLeft(leftG);
+		Vector2d lowerLeft =  keyA.next();
 		
 		while (keyA.hasNext())
 		{
