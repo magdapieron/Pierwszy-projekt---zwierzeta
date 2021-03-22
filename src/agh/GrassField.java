@@ -36,7 +36,9 @@ public class GrassField extends AbstractWorldMap {
 			{
 				position = randomizePosition();
 			}
-			grassFields.put(position, new Grass(position));
+			Grass grass =  new Grass(position);
+			grassFields.put(position, grass);
+//			super.mapBoundary.addObject(grass);
 		}
 	}
 	

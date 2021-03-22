@@ -1,6 +1,6 @@
 package agh;
 
-public class Grass {
+public class Grass implements IMapElement{
 
 	private Vector2d position;
 	
@@ -9,13 +9,14 @@ public class Grass {
 		this.position = position;
 	}
 
-	public Vector2d getPosition() {
-		return position;
-	}
-
 	@Override
 	public String toString() {
 		return "*";
+	}
+
+	@Override
+	public Vector2d getPosition() {
+		return position;
 	}
 
 }

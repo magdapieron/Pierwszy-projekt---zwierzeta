@@ -8,6 +8,7 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 
 	protected Map<Vector2d, Animal> animals = new LinkedHashMap<>();
 	protected MapVisualizer visulation = new MapVisualizer(this);
+//	protected MapBoundary mapBoundary = new MapBoundary(this);
 	
 	public abstract boolean canMoveTo(Vector2d position);
 	
