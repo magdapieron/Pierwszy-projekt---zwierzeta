@@ -23,13 +23,9 @@ public class MapBoundary implements IPositionChangeObserver{
 	@Override
 	public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
 		
-		IMapElement oldObject = (IMapElement)map.objectAt(oldPosition);
 		IMapElement newObject = (IMapElement)map.objectAt(newPosition);
 		
-//		setX.remove(oldObject);		//NullPointerException
-//		setY.remove(oldObject);
-		
-		setX.remove(newObject);	// Override Animals in sets
+		setX.remove(newObject);		// Override Animals in sets and there are still some problems
 		setY.remove(newObject);	
 		
 		setX.add(newObject);
@@ -46,9 +42,7 @@ public class MapBoundary implements IPositionChangeObserver{
 	{
 		Vector2d x = setX.last().getPosition();
 		Vector2d y = setY.last().getPosition();
-		System.out.println("prawy: " + x.upperRight(y));
-		System.out.println("X" + setX);
-		System.out.println("Y" + setY);
+
 		return x.upperRight(y);
 	}
 	
@@ -56,14 +50,20 @@ public class MapBoundary implements IPositionChangeObserver{
 	{
 		Vector2d x = setX.first().getPosition();
 		Vector2d y = setY.first().getPosition();
-		System.out.println("lewy: " + x.lowerLeft(y));
+
 		return x.lowerLeft(y);
 	}
 }	
 
+/**
+ * Comparator returns:
+ * -1 if object1 < object 2
+ * 1 if object1>object2
+ * there's no way, that objects are equal
+ */
 
 class Xcomparator implements Comparator<IMapElement>
-{
+{	
 	@Override
 	public int compare(IMapElement x1, IMapElement x2) {
 		
@@ -80,7 +80,7 @@ class Xcomparator implements Comparator<IMapElement>
 
 			else
 			{
-				if(x1 instanceof Animal && x2 instanceof Grass)
+				if(x1 instanceof Animal && x2 instanceof Grass) 	// On one position can be maximum two objects of other types
 					return 1;
 				else
 					return -1;		

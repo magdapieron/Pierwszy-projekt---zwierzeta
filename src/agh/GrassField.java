@@ -1,6 +1,5 @@
 package agh;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -48,9 +47,7 @@ public class GrassField extends AbstractWorldMap {
 	
 	@Override
 	public boolean canMoveTo(Vector2d position) {
-		if(!isOccupied(position))
-			return true;
-		return false;
+		return (!isOccupied(position) || objectAt(position) instanceof Grass);
 	}
 	
 	@Override
@@ -59,10 +56,9 @@ public class GrassField extends AbstractWorldMap {
 		if(super.isOccupied(position))
 			return true;
 
-		if(grassFields.containsKey(position))
-			return true;
+		return (grassFields.containsKey(position));
+			
 
-		return false;
 	}
 	
 	@Override

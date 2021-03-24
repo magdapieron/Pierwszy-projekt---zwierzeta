@@ -23,13 +23,11 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 		return true;
 	}
 
-	public boolean isOccupied(Vector2d position) {
-		if(animals.containsKey(position))
-			return true;
-		return false;
+	public boolean isOccupied(Vector2d position) {	
+		return animals.containsKey(position);
 	}
 	
-	abstract Vector2d getRightCorner();
+	abstract Vector2d getRightCorner();		
 	abstract Vector2d getLeftCorner();
 	
 	public String toString()		
