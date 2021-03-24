@@ -7,6 +7,10 @@ import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
 
+	/**
+	 * map with Grass and Animals
+	 */
+	
 	private int numberOfGrassField;
 	private Map<Vector2d, Grass> grassFields;
 	
@@ -38,7 +42,7 @@ public class GrassField extends AbstractWorldMap {
 			}
 			Grass grass =  new Grass(position);
 			grassFields.put(position, grass);
-//			super.mapBoundary.addObject(grass);
+			super.mapBoundary.add(grass);
 		}
 	}
 	
@@ -83,38 +87,12 @@ public class GrassField extends AbstractWorldMap {
 	@Override
 	public Vector2d getRightCorner()
 	{	
-		Iterator<Vector2d> keyA = animals.keySet().iterator();
-		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
-		
-		Vector2d upperRight = keyA.next();	
-				
-		while (keyA.hasNext())
-		{
-			upperRight = upperRight.upperRight(keyA.next());
-		}
-		while (keyG.hasNext())
-		{
-			upperRight = upperRight.upperRight(keyG.next());
-		}
-		return upperRight;
+		return mapBoundary.rightCorner();
 	}
 	
 	@Override
 	public Vector2d getLeftCorner()
 	{		
-		Iterator<Vector2d> keyA = animals.keySet().iterator();
-		Iterator<Vector2d> keyG = grassFields.keySet().iterator();
-		
-		Vector2d lowerLeft =  keyA.next();
-		
-		while (keyA.hasNext())
-		{
-			lowerLeft = lowerLeft.lowerLeft(keyA.next());
-		}
-		while (keyG.hasNext())
-		{
-			lowerLeft = lowerLeft.lowerLeft(keyG.next());
-		}
-		return lowerLeft;
+		return mapBoundary.leftCorner();
 	}	
 }

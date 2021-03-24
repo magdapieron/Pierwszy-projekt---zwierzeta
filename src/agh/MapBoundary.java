@@ -5,6 +5,10 @@ import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver{
 
+	/**
+	 * storing information about the area covered by objects on the map
+	 */
+	
 	private TreeSet<IMapElement> setX;
 	private TreeSet<IMapElement> setY;
 	private IWorldMap map;
@@ -18,14 +22,43 @@ public class MapBoundary implements IPositionChangeObserver{
 	
 	@Override
 	public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-		// TODO Auto-generated method stub		
+		
+		IMapElement oldObject = (IMapElement)map.objectAt(oldPosition);
+		IMapElement newObject = (IMapElement)map.objectAt(newPosition);
+		
+//		setX.remove(oldObject);		//NullPointerException
+//		setY.remove(oldObject);
+		
+		setX.remove(newObject);	// Override Animals in sets
+		setY.remove(newObject);	
+		
+		setX.add(newObject);
+		setY.add(newObject);			// removed and added with actual position, so sets are tidy
 	}
 	
-//	public void addObject(Object object)
-//	{
-//		setX.add(object);
-//		
-//	}
+	public void add(IMapElement object)
+	{
+		setX.add(object);
+		setY.add(object);
+	}
+	
+	public Vector2d rightCorner()
+	{
+		Vector2d x = setX.last().getPosition();
+		Vector2d y = setY.last().getPosition();
+		System.out.println("prawy: " + x.upperRight(y));
+		System.out.println("X" + setX);
+		System.out.println("Y" + setY);
+		return x.upperRight(y);
+	}
+	
+	public Vector2d leftCorner()
+	{
+		Vector2d x = setX.first().getPosition();
+		Vector2d y = setY.first().getPosition();
+		System.out.println("lewy: " + x.lowerLeft(y));
+		return x.lowerLeft(y);
+	}
 }	
 
 

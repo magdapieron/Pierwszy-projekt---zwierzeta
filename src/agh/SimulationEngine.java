@@ -43,7 +43,8 @@ public class SimulationEngine implements IEngine {
 				actualAnimal.move(direction);
 				i++;
 			}
-			
+			System.out.println("animal: " + animals.get(0).getPosition());
+			System.out.println("animal: " + animals.get(1).getPosition());
 		}
 		System.out.println(map);
 	}
