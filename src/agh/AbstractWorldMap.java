@@ -16,10 +16,10 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 		if(isOccupied(animal.getPosition()))
 			throw new IllegalArgumentException(animal.getPosition() + "is occupied");
 		animals.put(animal.getPosition(), animal);
-		animal.addObserver(this);					// register the map as an observer
+		animal.addObserver(this);						// register the map as an observer
+		animal.addObserver(mapBoundary);				// register the mapBoundary as an observer
 		mapBoundary.add(animal);
-		animal.addObserver(mapBoundary);			// register the mapBoundary as an observer
-		
+					
 		return true;
 	}
 
@@ -37,8 +37,11 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 	
 	public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
 	{
+		System.out.println("stara i nowa: " + oldPosition + " " + newPosition);
 		Animal animal = animals.get(oldPosition);
+		System.out.println(animal.getPosition());
 		animals.remove(oldPosition, animal);
 		animals.put(newPosition, animal);
 	}
+	
 }

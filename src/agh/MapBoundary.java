@@ -8,7 +8,7 @@ public class MapBoundary implements IPositionChangeObserver{
 	/**
 	 * storing information about the area covered by objects on the map
 	 */
-	
+
 	private TreeSet<IMapElement> setX;
 	private TreeSet<IMapElement> setY;
 	private IWorldMap map;
@@ -24,12 +24,13 @@ public class MapBoundary implements IPositionChangeObserver{
 	public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
 		
 		IMapElement newObject = (IMapElement)map.objectAt(newPosition);
-		
-		setX.remove(newObject);		// Override Animals in sets and there are still some problems
+
+//		System.out.println(setX.contains(newObject));   return false, why? 
+		setX.remove(newObject);			 				// Override Animals in sets, 
 		setY.remove(newObject);	
-		
+
 		setX.add(newObject);
-		setY.add(newObject);			// removed and added with actual position, so sets are tidy
+		setY.add(newObject);							// removed and added with actual position, so sets are tidy
 	}
 	
 	public void add(IMapElement object)
@@ -42,7 +43,7 @@ public class MapBoundary implements IPositionChangeObserver{
 	{
 		Vector2d x = setX.last().getPosition();
 		Vector2d y = setY.last().getPosition();
-
+		System.out.println("prawy: " + x.upperRight(y));
 		return x.upperRight(y);
 	}
 	
@@ -50,10 +51,10 @@ public class MapBoundary implements IPositionChangeObserver{
 	{
 		Vector2d x = setX.first().getPosition();
 		Vector2d y = setY.first().getPosition();
-
 		return x.lowerLeft(y);
 	}
 }	
+
 
 /**
  * Comparator returns:

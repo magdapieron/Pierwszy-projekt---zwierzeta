@@ -27,6 +27,7 @@ public class SimulationEngine implements IEngine {
 				animals.add(animal);
 			}
 		}
+		
 	}
 
 	@Override

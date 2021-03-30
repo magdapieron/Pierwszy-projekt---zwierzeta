@@ -15,7 +15,7 @@ public class World extends OptionParser {
 //		
 //		engine.run();
 		
-		
+			
 		MoveDirection[] directions = new OptionParser().parse(args);
 		IWorldMap map = new GrassField(10);		
 		Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };

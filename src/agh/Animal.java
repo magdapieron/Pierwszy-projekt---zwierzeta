@@ -71,8 +71,9 @@ public class Animal implements IMapElement{
 	{
 		if(map.canMoveTo(nextPosition))
 		{
-			positionChanged(position, nextPosition);	// informs observers about the change of position
+			Vector2d previousPosition = this.position;
 			this.position = nextPosition;
+			positionChanged(previousPosition, nextPosition);	// informs observers about the change of position		
 		}
 	}
 	 
@@ -94,47 +95,30 @@ public class Animal implements IMapElement{
 		 }
 	 }
 
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + ((map == null) ? 0 : map.hashCode());
-//		result = prime * result + ((observers == null) ? 0 : observers.hashCode());
-//		result = prime * result + ((orientation == null) ? 0 : orientation.hashCode());
-//		result = prime * result + ((position == null) ? 0 : position.hashCode());
-//		return result;
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		Animal other = (Animal) obj;
-//		if (map == null) {
-//			if (other.map != null)
-//				return false;
-//		} else if (!map.equals(other.map))
-//			return false;
-//		if (observers == null) {
-//			if (other.observers != null)
-//				return false;
-//		} else if (!observers.equals(other.observers))
-//			return false;
-//		if (orientation != other.orientation)
-//			return false;
-//		if (position == null) {
-//			if (other.position != null)
-//				return false;
-//		} else if (!position.equals(other.position))
-//			return false;
-//		return true;
-//	}
-//
-//	
-//	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Animal other = (Animal) obj;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
+	}	
+
 }
