@@ -66,16 +66,21 @@ public class GrassField extends AbstractWorldMap {
 		
 		if(isOccupied(position))  
 		{
-				if(grassFields.get(position) != null)
-				{
-					Object obj = grassFields.get(position);
-					return obj;
-				}				
-				if(animals.get(position) != null)
-				{
-					Object obj = animals.get(position);
-					return obj;
-				}
+			if(animals.get(position) != null)
+			{
+				Object obj = animals.get(position);
+				return obj;
+			}
+			if(grassFields.get(position) != null)
+			{
+				Object obj = grassFields.get(position);
+				return obj;
+			}				
+			if(animals.get(position) != null)
+			{
+				Object obj = animals.get(position);
+				return obj;
+			}
 		}			
 		return null;
 	}

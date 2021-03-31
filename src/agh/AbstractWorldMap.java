@@ -37,9 +37,7 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
 	
 	public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
 	{
-		System.out.println("stara i nowa: " + oldPosition + " " + newPosition);
 		Animal animal = animals.get(oldPosition);
-		System.out.println(animal.getPosition());
 		animals.remove(oldPosition, animal);
 		animals.put(newPosition, animal);
 	}

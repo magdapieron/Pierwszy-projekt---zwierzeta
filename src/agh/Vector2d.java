@@ -14,7 +14,7 @@ public class Vector2d {
 
 	@Override
 	public String toString() {
-		return "Vector2d (" + x + "," + y + ")";
+		return "(" + x + "," + y + ")";
 	}
 	
 	boolean precedes(Vector2d other) 

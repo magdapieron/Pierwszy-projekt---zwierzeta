@@ -27,8 +27,6 @@ public class World extends OptionParser {
 		{
 			System.err.println(ex);
 		}
-
-		
 	} 
 	
 }
